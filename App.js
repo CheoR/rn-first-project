@@ -1,33 +1,43 @@
-import { StyleSheet, Button, Text, View } from "react-native";
+import { StyleSheet, Button, Text, TextInput, View } from "react-native";
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <View>
-        <Text style={styles.sampleText}>Bark bark bark</Text>
+      <View style={styles.inputContainer}>
+        <TextInput style={styles.textInput} placeholder="Pug Things" />
+        <Button title="Pug Goals" />
       </View>
-      <Button title="Pug" />
-      <Text
-        style={{ margin: 8, borderWidth: 3, borderColor: "red", padding: 8 }}
-      >
-        "Moooo" goes the little pug. Oink Oink Moo
-      </Text>
+      <View style={styles.listContainer}>
+        <Text>Pug List of Barks</Text>
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
+    padding: 50,
+    paddingHorizontal: 16,
     flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
   },
-  sampleText: {
-    margin: 8,
-    borderWidth: 3,
-    borderColor: "red",
+  inputContainer: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingBottom: 24,
+    backgroundColor: "lightblue",
+  },
+  textInput: {
+    borderWidth: 1,
+    borderColor: "#aba",
+    width: "70%",
+    backgroundColor: "lightgreen",
+    marginRight: 8,
     padding: 8,
+  },
+  listContainer: {
+    flex: 3,
     backgroundColor: "pink",
   },
 });
