@@ -1,14 +1,31 @@
+import { useState } from "react";
 import { StyleSheet, Button, Text, TextInput, View } from "react-native";
 
 export default function App() {
+  const [text, setText] = useState("");
+  const [goals, setGoals] = useState([]);
+
+  const inputHandler = (text) => setText(text);
+  const goalHandler = () => {
+    setGoals((prev) => [...prev, text]);
+    inputHandler("");
+  };
   return (
     <View style={styles.container}>
       <View style={styles.inputContainer}>
-        <TextInput style={styles.textInput} placeholder="Pug Things" />
-        <Button title="Pug Goals" />
+        <TextInput
+          style={styles.textInput}
+          placeholder="Pug Things"
+          onChangeText={inputHandler}
+        />
+        <Button title="Pug Goals" onPress={goalHandler} />
       </View>
       <View style={styles.listContainer}>
-        <Text>Pug List of Barks</Text>
+        {goals.map((goal, idx) => (
+          <View key={`${idx}-${goal}`} style={styles.goal}>
+            <Text style={styles.goalText}>{goal}</Text>
+          </View>
+        ))}
       </View>
     </View>
   );
@@ -39,5 +56,14 @@ const styles = StyleSheet.create({
   listContainer: {
     flex: 3,
     backgroundColor: "pink",
+  },
+  goal: {
+    backgroundColor: "black",
+    padding: 8,
+    margin: 8,
+    borderRadius: 10,
+  },
+  goalText: {
+    color: "white",
   },
 });
