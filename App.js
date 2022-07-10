@@ -1,33 +1,16 @@
 import { useState } from "react";
-import {
-  Button,
-  FlatList,
-  Text,
-  TextInput,
-  ScrollView,
-  StyleSheet,
-  View,
-} from "react-native";
+import { FlatList, StyleSheet, View } from "react-native";
+import GoalInput from "./components/GoalInput";
+import GoalItem from "./components/GoalItem";
 
 export default function App() {
-  const [text, setText] = useState("");
   const [goals, setGoals] = useState([]);
-
-  const inputHandler = (text) => setText(text);
-  const goalHandler = () => {
+  const goalHandler = (text) => {
     setGoals((prev) => [...prev, { text: text, id: Math.random().toString() }]);
-    inputHandler("");
   };
   return (
     <View style={styles.container}>
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.textInput}
-          placeholder="Pug Things"
-          onChangeText={inputHandler}
-        />
-        <Button title="Pug Goals" onPress={goalHandler} />
-      </View>
+      <GoalInput goalHandler={goalHandler} />
       <View style={styles.listContainer}>
         <FlatList
           data={goals}
@@ -35,11 +18,7 @@ export default function App() {
             return data.id;
           }}
           renderItem={(data) => {
-            return (
-              <View style={styles.goal}>
-                <Text style={styles.goalText}>{data.item.text}</Text>
-              </View>
-            );
+            return <GoalItem text={data.item.text} />;
           }}
         />
       </View>
@@ -53,33 +32,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     flex: 1,
   },
-  inputContainer: {
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    paddingBottom: 24,
-    backgroundColor: "lightblue",
-  },
-  textInput: {
-    borderWidth: 1,
-    borderColor: "#aba",
-    width: "70%",
-    backgroundColor: "lightgreen",
-    marginRight: 8,
-    padding: 8,
-  },
   listContainer: {
     flex: 3,
     backgroundColor: "pink",
-  },
-  goal: {
-    backgroundColor: "black",
-    padding: 8,
-    margin: 8,
-    borderRadius: 10,
-  },
-  goalText: {
-    color: "white",
   },
 });
