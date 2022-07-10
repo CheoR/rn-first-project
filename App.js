@@ -1,10 +1,11 @@
 import { useState } from "react";
 import {
-  StyleSheet,
   Button,
+  FlatList,
   Text,
   TextInput,
   ScrollView,
+  StyleSheet,
   View,
 } from "react-native";
 
@@ -14,7 +15,10 @@ export default function App() {
 
   const inputHandler = (text) => setText(text);
   const goalHandler = () => {
-    setGoals((prev) => [...prev, text]);
+    setGoals((prev) => [
+      ...prev,
+      { text: text, key: Math.random().toString() },
+    ]);
     inputHandler("");
   };
   return (
@@ -28,13 +32,19 @@ export default function App() {
         <Button title="Pug Goals" onPress={goalHandler} />
       </View>
       <View style={styles.listContainer}>
-        <ScrollView>
-          {goals.map((goal, idx) => (
-            <View key={`${idx}-${goal}`} style={styles.goal}>
-              <Text style={styles.goalText}>{goal}</Text>
-            </View>
-          ))}
-        </ScrollView>
+        <FlatList
+          data={goals}
+          // keyExtractor={(data, idx) => {
+          //   return data.id;
+          // }}
+          renderItem={(data) => {
+            return (
+              <View style={styles.goal}>
+                <Text style={styles.goalText}>{data.item.text}</Text>
+              </View>
+            );
+          }}
+        />
       </View>
     </View>
   );
