@@ -1,3 +1,4 @@
+import { StatusBar } from "expo-status-bar";
 import { useState } from "react";
 import { Button, FlatList, StyleSheet, View } from "react-native";
 import GoalInput from "./components/GoalInput";
@@ -19,33 +20,36 @@ export default function App() {
     setIsModalOpen(false);
   };
   return (
-    <View style={styles.container}>
-      <Button title="New Bark" color="orange" onPress={openModal} />
-      {isModalOpen && (
-        <GoalInput
-          goalHandler={goalHandler}
-          visible={isModalOpen}
-          onCancel={closeModal}
-        />
-      )}
-      <View style={styles.listContainer}>
-        <FlatList
-          data={goals}
-          keyExtractor={(data, idx) => {
-            return data.id;
-          }}
-          renderItem={(data) => {
-            return (
-              <GoalItem
-                id={data.item.id}
-                text={data.item.text}
-                onDeleteHandler={deleteHandler}
-              />
-            );
-          }}
-        />
+    <>
+      <StatusBar style="dark" />
+      <View style={styles.container}>
+        <Button title="New Bark" color="orange" onPress={openModal} />
+        {isModalOpen && (
+          <GoalInput
+            goalHandler={goalHandler}
+            visible={isModalOpen}
+            onCancel={closeModal}
+          />
+        )}
+        <View style={styles.listContainer}>
+          <FlatList
+            data={goals}
+            keyExtractor={(data, idx) => {
+              return data.id;
+            }}
+            renderItem={(data) => {
+              return (
+                <GoalItem
+                  id={data.item.id}
+                  text={data.item.text}
+                  onDeleteHandler={deleteHandler}
+                />
+              );
+            }}
+          />
+        </View>
       </View>
-    </View>
+    </>
   );
 }
 
@@ -57,6 +61,6 @@ const styles = StyleSheet.create({
   },
   listContainer: {
     flex: 3,
-    backgroundColor: "pink",
+    // backgroundColor: "pink",
   },
 });
