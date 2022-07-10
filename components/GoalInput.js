@@ -1,8 +1,8 @@
 import { useState } from "react";
 
-import { Button, TextInput, StyleSheet, View } from "react-native";
+import { Button, Modal, TextInput, StyleSheet, View } from "react-native";
 
-const GoalInput = ({ goalHandler }) => {
+const GoalInput = ({ goalHandler, visible, onCancel }) => {
   const [text, setText] = useState("");
 
   const inputHandler = (text) => setText(text);
@@ -11,16 +11,26 @@ const GoalInput = ({ goalHandler }) => {
     goalHandler(text);
     setText("");
   };
+
   return (
-    <View style={styles.inputContainer}>
-      <TextInput
-        value={text}
-        style={styles.textInput}
-        placeholder="Pug Things"
-        onChangeText={inputHandler}
-      />
-      <Button title="Pug Goals" onPress={addGoalHandler} />
-    </View>
+    <Modal visible={visible} animationType="slide">
+      <View style={styles.inputContainer}>
+        <TextInput
+          value={text}
+          style={styles.textInput}
+          placeholder="Pug Things"
+          onChangeText={inputHandler}
+        />
+        <View style={styles.btnContainer}>
+          <View style={styles.btn}>
+            <Button title="Naw" onPress={onCancel} />
+          </View>
+          <View style={styles.btn}>
+            <Button title="Pug Goals" onPress={addGoalHandler} />
+          </View>
+        </View>
+      </View>
+    </Modal>
   );
 };
 
@@ -29,18 +39,28 @@ export default GoalInput;
 const styles = StyleSheet.create({
   inputContainer: {
     flex: 1,
-    flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "center",
     alignItems: "center",
+    padding: 16,
     paddingBottom: 24,
     backgroundColor: "lightblue",
   },
   textInput: {
     borderWidth: 1,
     borderColor: "#aba",
-    width: "70%",
+    width: "100%",
     backgroundColor: "lightgreen",
-    marginRight: 8,
     padding: 8,
+  },
+  btnContainer: {
+    flexDirection: "row",
+    padding: 16,
+    backgroundColor: "pink",
+    width: "100%",
+    justifyContent: "space-evenly",
+  },
+  btn: {
+    width: "30%",
+    marginHorizontal: 8,
   },
 });

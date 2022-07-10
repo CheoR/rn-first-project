@@ -1,10 +1,14 @@
 import { useState } from "react";
-import { FlatList, StyleSheet, View } from "react-native";
+import { Button, FlatList, StyleSheet, View } from "react-native";
 import GoalInput from "./components/GoalInput";
 import GoalItem from "./components/GoalItem";
 
 export default function App() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [goals, setGoals] = useState([]);
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
 
   const deleteHandler = (id) => {
     const updatedGoals = goals.filter((goal) => goal.id !== id);
@@ -12,10 +16,18 @@ export default function App() {
   };
   const goalHandler = (text) => {
     setGoals((prev) => [...prev, { text: text, id: Math.random().toString() }]);
+    setIsModalOpen(false);
   };
   return (
     <View style={styles.container}>
-      <GoalInput goalHandler={goalHandler} />
+      <Button title="New Bark" color="orange" onPress={openModal} />
+      {isModalOpen && (
+        <GoalInput
+          goalHandler={goalHandler}
+          visible={isModalOpen}
+          onCancel={closeModal}
+        />
+      )}
       <View style={styles.listContainer}>
         <FlatList
           data={goals}
