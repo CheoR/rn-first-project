@@ -15,10 +15,7 @@ export default function App() {
 
   const inputHandler = (text) => setText(text);
   const goalHandler = () => {
-    setGoals((prev) => [
-      ...prev,
-      { text: text, key: Math.random().toString() },
-    ]);
+    setGoals((prev) => [...prev, { text: text, id: Math.random().toString() }]);
     inputHandler("");
   };
   return (
@@ -34,9 +31,9 @@ export default function App() {
       <View style={styles.listContainer}>
         <FlatList
           data={goals}
-          // keyExtractor={(data, idx) => {
-          //   return data.id;
-          // }}
+          keyExtractor={(data, idx) => {
+            return data.id;
+          }}
           renderItem={(data) => {
             return (
               <View style={styles.goal}>
