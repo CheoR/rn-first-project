@@ -6,6 +6,7 @@ const GoalInput = ({ goalHandler }) => {
   const [text, setText] = useState("");
 
   const inputHandler = (text) => setText(text);
+
   const addGoalHandler = () => {
     goalHandler(text);
     setText("");

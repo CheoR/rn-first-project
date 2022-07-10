@@ -5,6 +5,11 @@ import GoalItem from "./components/GoalItem";
 
 export default function App() {
   const [goals, setGoals] = useState([]);
+
+  const deleteHandler = (id) => {
+    const updatedGoals = goals.filter((goal) => goal.id !== id);
+    setGoals(updatedGoals);
+  };
   const goalHandler = (text) => {
     setGoals((prev) => [...prev, { text: text, id: Math.random().toString() }]);
   };
@@ -18,7 +23,13 @@ export default function App() {
             return data.id;
           }}
           renderItem={(data) => {
-            return <GoalItem text={data.item.text} />;
+            return (
+              <GoalItem
+                id={data.item.id}
+                text={data.item.text}
+                onDeleteHandler={deleteHandler}
+              />
+            );
           }}
         />
       </View>
